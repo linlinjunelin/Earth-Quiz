@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ពេលថ្ងៃ និងពេលយប់ — ការពង្រឹងពុទ្ធិ</title><meta name="theme-color" content="#1d2a5b"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="ថ្ងៃ និងយប់"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icon-180.png">
+
+<style>
+:root{--bg:#fff8e7;--ink:#1d2540;--day:#ffc83d;--night:#1d2a5b;--card:#ffffff;--line:#e3d9bd;--ok:#1e8a4c;--bad:#c93a3a;--muted:#5b6482;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10152b;--ink:#f1ecdc;--card:#1a2142;--line:#2e386b;--muted:#a9b0d0;--night:#3a4a9a}}
+:root[data-theme="dark"]{--bg:#10152b;--ink:#f1ecdc;--card:#1a2142;--line:#2e386b;--muted:#a9b0d0;--night:#3a4a9a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Khmer OS Battambang","Leelawadee UI","Noto Sans Khmer",system-ui,sans-serif;line-height:1.8;font-size:18px}
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+header{padding:24px 0 8px}
+h1{font-size:clamp(28px,6vw,44px);line-height:1.4;margin:0;font-weight:800}
+h2{font-size:clamp(22px,4vw,28px);margin:0 0 4px;font-weight:800}
+p{margin:6px 0}.muted{color:var(--muted);font-size:16px}
+section{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:20px;margin-top:24px}
+svg{width:100%;height:auto;display:block}
+input[type=range]{width:100%;height:36px;accent-color:var(--night)}
+.status{font-weight:800;font-size:22px;padding:10px 14px;border-radius:12px;margin-top:8px}
+.status.d{background:var(--day);color:#2a2100}.status.n{background:var(--night);color:#fff}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0}
+.fixed,.slot,.pc{border-radius:12px;padding:10px 14px;font-size:18px;font-family:inherit;border:2px solid var(--ink)}
+.fixed{background:var(--ink);color:var(--bg);font-weight:600}
+.slot{min-width:130px;min-height:50px;border-style:dashed;background:transparent;color:var(--ink);cursor:pointer;text-align:center}
+.slot.full{border-style:solid;background:var(--ok);color:#fff;border-color:var(--ok);cursor:default;font-weight:600}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.pc{background:var(--day);color:#2a2100;cursor:pointer;font-weight:600;border-color:#2a2100}
+.pc.sel{outline:4px solid var(--night);outline-offset:2px}
+.shake{animation:sh .35s}@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){.shake{animation:none;border-color:var(--bad)}}
+.arrow{font-size:22px}
+.box{border-left:6px solid var(--day);background:color-mix(in srgb,var(--day) 18%,transparent);padding:10px 14px;border-radius:8px;margin-top:14px}
+button.main{font:inherit;font-weight:800;font-size:20px;padding:12px 22px;border-radius:12px;border:0;background:var(--night);color:#fff;cursor:pointer}
+button.tf{font:inherit;font-weight:800;font-size:28px;padding:14px 10px;border-radius:14px;border:3px solid;flex:1;cursor:pointer;background:transparent}
+.t{color:var(--ok);border-color:var(--ok)}.f{color:var(--bad);border-color:var(--bad)}
+button:disabled{opacity:.45;cursor:default}
+button:focus-visible,.slot:focus-visible,.pc:focus-visible,input:focus-visible{outline:4px solid #2f7bff;outline-offset:2px}
+.q{font-size:clamp(20px,4vw,26px);font-weight:600;min-height:90px}
+.fb{margin-top:12px;padding:12px 14px;border-radius:12px;font-weight:600}
+.fb.ok{background:color-mix(in srgb,var(--ok) 20%,transparent)}.fb.no{background:color-mix(in srgb,var(--bad) 20%,transparent)}
+.bar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>🌍 ហេតុអ្វីបានជាមានពេលថ្ងៃ និងពេលយប់?</h1>
+<p class="muted">ការពង្រឹងពុទ្ធិ · ប្រហែល ១២–១៥ នាទី · មើល តម្រៀប ពន្យល់</p>
+</header>
+
+<section aria-labelledby="h0">
+<h2 id="h0">សិក្សាគំរូ៖ ផែនដីវិល</h2>
+<p>អូសរបារ ដើម្បីវិលផែនដី។ ចំណុចក្រហមគឺជាកន្លែងដែលអ្នកនៅ។</p>
+<svg viewBox="0 0 400 230" role="img" aria-label="ព្រះអាទិត្យនៅខាងឆ្វេង ផែនដីនៅខាងស្តាំ ផ្នែកខាងឆ្វេងនៃផែនដីមានពន្លឺ">
+<g stroke="#ffc83d" stroke-width="4" stroke-linecap="round"><line x1="110" y1="60" x2="190" y2="60"/><line x1="115" y1="115" x2="185" y2="115"/><line x1="110" y1="170" x2="190" y2="170"/></g>
+<circle cx="50" cy="115" r="42" fill="#ffc83d"/>
+<circle cx="270" cy="115" r="75" fill="#6ec1ff"/>
+<path d="M270 40A75 75 0 0 1 270 190Z" fill="#1d2a5b"/>
+<circle cx="270" cy="115" r="75" fill="none" stroke="#888" stroke-width="2"/>
+<circle id="pin" cx="195" cy="115" r="10" fill="#e8372c" stroke="#fff" stroke-width="3"/>
+<text x="50" y="220" text-anchor="middle" font-size="16" fill="currentColor">ព្រះអាទិត្យ</text>
+<text x="270" y="222" text-anchor="middle" font-size="16" fill="currentColor">ផែនដី</text>
+</svg>
+<input id="rot" type="range" min="0" max="359" value="180" aria-label="វិលផែនដី">
+<div id="st" class="status d"></div>
+</section>
+
+<section aria-labelledby="h1">
+<h2 id="h1">🌍 សកម្មភាព ១៖ មើលរូប–តម្រៀប–ពន្យល់</h2>
+<p>ជ្រើសកាតពីខាងក្រោម រួចចុចប្រអប់ទទេដែលត្រូវនឹងវា។</p>
+<div class="row"><span class="fixed">ផ្នែកផែនដីបែរទៅព្រះអាទិត្យ</span><span class="arrow">→</span><button class="slot" data-a="a">ប្រអប់ទទេ</button><span class="arrow">→</span><button class="slot" data-a="b">ប្រអប់ទទេ</button></div>
+<div class="row"><span class="fixed">ផ្នែកផែនដីបែរចេញពីព្រះអាទិត្យ</span><span class="arrow">→</span><button class="slot" data-a="c">ប្រអប់ទទេ</button><span class="arrow">→</span><button class="slot" data-a="d">ប្រអប់ទទេ</button></div>
+<div class="pool" id="pool">
+<button class="pc" data-k="a">ទទួលពន្លឺ</button><button class="pc" data-k="c">មិនទទួលពន្លឺ</button><button class="pc" data-k="b">ពេលថ្ងៃ ☀️</button><button class="pc" data-k="d">ពេលយប់ 🌙</button>
+</div>
+<p id="msg" class="muted" aria-live="polite"></p>
+<div id="explain" class="box hide">
+<b>ដល់វេនតំណាងក្រុមពន្យល់!</b>
+<p>១. ហេតុអ្វីបានជាអ្នករៀបកាត "ទទួលពន្លឺ" ជាប់នឹង "ពេលថ្ងៃ"?<br>២. បើផ្នែកនេះបែរចេញពីព្រះអាទិត្យ តើវាកើតអ្វីឡើង?<br>៣. តើពន្លឺព្រះអាទិត្យអាចភ្លឺលើផែនដីទាំងមូលក្នុងពេលតែមួយបានទេ? ហេតុអ្វី?</p>
+<details><summary>មើលចម្លើយគំរូ</summary><p>ព្រោះផែនដីមានរាងស្វ៊ែរ ពន្លឺព្រះអាទិត្យភ្លឺបានតែម្ខាង។ ផ្នែកដែលបែរទៅរកព្រះអាទិត្យមានពន្លឺ ជាពេលថ្ងៃ ហើយផ្នែកម្ខាងទៀតងងឹត ជាពេលយប់។</p><p class="muted">ប្រយ័ត្ន៖ បើសិស្សនិយាយថា «ព្រះអាទិត្យទៅលាក់ខ្លួន» មានន័យថាគេទាន់មិនទាន់យល់។</p></details>
+</div>
+</section>
+
+<section aria-labelledby="h2">
+<h2 id="h2">✅❌ សកម្មភាព ២៖ ត្រូវ ឬខុស</h2>
+<div class="bar"><i id="pr"></i></div>
+<p id="cnt" class="muted"></p>
+<div id="qa">
+<div class="q" id="q"></div>
+<div class="row"><button class="tf t" id="bt">✓ ត្រូវ</button><button class="tf f" id="bf">✗ ខុស</button></div>
+<div id="fb" class="fb hide" aria-live="polite"></div>
+<div class="row"><button class="main hide" id="nx">បន្ទាប់</button></div>
+</div>
+<div id="end" class="hide">
+<div class="status d" id="score"></div>
+<div class="box"><b>សេចក្តីសន្និដ្ឋាន៖</b> «ព្រោះផែនដីវិលជុំវិញខ្លួនឯង ផ្នែកដែលបែរទៅព្រះអាទិត្យមានពន្លឺ ជាពេលថ្ងៃ ផ្នែកដែលបែរចេញងងឹត ជាពេលយប់។»</div>
+<div class="row"><button class="main" id="again">លេងម្តងទៀត</button></div>
+</div>
+<p class="muted">គ្រូអាចឱ្យសិស្ស ១–២ នាក់ ពន្យល់មូលហេតុមុននឹងចុចបង្ហាញចម្លើយ។</p>
+</section>
+</main>
+<script>
+// Rotation model
+var rot=document.getElementById('rot'),pin=document.getElementById('pin'),st=document.getElementById('st');
+function upd(){var a=rot.value*Math.PI/180,x=270+75*Math.cos(a),y=115+75*Math.sin(a);
+pin.setAttribute('cx',x);pin.setAttribute('cy',y);
+var day=Math.cos(a)<0;
+st.className='status '+(day?'d':'n');
+st.textContent=day?'☀️ ពេលថ្ងៃ — កន្លែងនេះបែរទៅព្រះអាទិត្យ':'🌙 ពេលយប់ — កន្លែងនេះបែរចេញពីព្រះអាទិត្យ'}
+rot.addEventListener('input',upd);upd();
+
+// Activity 1
+var sel=null,filled=0,msg=document.getElementById('msg');
+document.querySelectorAll('.pc').forEach(function(c){c.onclick=function(){
+document.querySelectorAll('.pc').forEach(function(x){x.classList.remove('sel')});
+sel=c;c.classList.add('sel');msg.textContent='ជ្រើសរួច៖ ចុចប្រអប់ដែលត្រូវនឹង «'+c.textContent+'»'}});
+document.querySelectorAll('.slot').forEach(function(s){s.onclick=function(){
+if(s.classList.contains('full'))return;
+if(!sel){msg.textContent='សូមជ្រើសកាតមុន។';return}
+if(sel.dataset.k===s.dataset.a){
+s.textContent=sel.textContent;s.classList.add('full');sel.remove();sel=null;filled++;
+msg.textContent='ត្រូវហើយ!';
+if(filled===4){msg.textContent='ពិតជាពូកែ! តម្រៀបគ្រប់ហើយ។';document.getElementById('explain').classList.remove('hide')}
+}else{s.classList.remove('shake');void s.offsetWidth;s.classList.add('shake');msg.textContent='មិនទាន់ត្រូវទេ។ គិតម្តងទៀតថា ផ្នែកនេះទទួលពន្លឺ ឬអត់?'}}});
+
+// Activity 2
+var Q=[
+['🌍 «ផែនដីមានរាងប្រហាក់ប្រហែលនឹងស្វ៊ែរ។»',1,'ផែនដីមានរាងមូលដូចបាល់។'],
+['☀️ «ផ្នែកផែនដីដែលបែរទៅព្រះអាទិត្យជាពេលយប់។»',0,'ផ្នែកដែលបែរទៅព្រះអាទិត្យទទួលពន្លឺ ដូច្នេះជាពេលថ្ងៃ។'],
+['🌙 «ផ្នែកដែលបែរចេញពីព្រះអាទិត្យជាពេលយប់។»',1,'ផ្នែកនោះមិនទទួលពន្លឺព្រះអាទិត្យ ក៏ងងឹត។'],
+['🔄 «ផែនដីវិលជុំវិញខ្លួនឯង។»',1,'ការវិលនេះធ្វើឱ្យផ្នែកនីមួយៗបែរទៅរក និងបែរចេញពីព្រះអាទិត្យជាបន្តបន្ទាប់។'],
+['🌍 «ផែនដីមិនមានចលនាទេ។»',0,'ផែនដីវិលជុំវិញខ្លួនឯងជានិច្ច។'],
+['☀️ «ព្រះអាទិត្យវិលជុំវិញផែនដី ធ្វើឱ្យមានថ្ងៃនិងយប់។»',0,'ផែនដីវិលជុំវិញខ្លួនឯង ទើបមានថ្ងៃនិងយប់។'],
+['🌏 «ពេលយើងនៅពេលយប់ មនុស្សនៅម្ខាងទៀតអាចនៅពេលថ្ងៃ។»',1,'ព្រះអាទិត្យភ្លឺបានតែម្ខាងនៃផែនដីក្នុងពេលតែមួយ។']];
+var i=0,sc=0,$=function(x){return document.getElementById(x)};
+function show(){$('q').textContent=Q[i][0];$('cnt').textContent='សំណួរ '+(i+1)+' / '+Q.length;$('pr').style.width=(i/Q.length*100)+'%';
+$('fb').className='fb hide';$('nx').classList.add('hide');$('bt').disabled=$('bf').disabled=false}
+function ans(v){var ok=(v===Q[i][1]);if(ok)sc++;
+$('bt').disabled=$('bf').disabled=true;
+$('fb').className='fb '+(ok?'ok':'no');
+$('fb').textContent=(ok?'✓ ត្រូវហើយ! ':'✗ មិនទាន់ត្រូវ។ ')+'ចម្លើយ៖ '+(Q[i][1]?'ត្រូវ':'ខុស')+' — '+Q[i][2];
+$('nx').textContent=(i===Q.length-1)?'មើលលទ្ធផល':'បន្ទាប់';$('nx').classList.remove('hide');$('nx').focus()}
+$('bt').onclick=function(){ans(1)};$('bf').onclick=function(){ans(0)};
+$('nx').onclick=function(){i++;if(i>=Q.length){$('qa').classList.add('hide');$('end').classList.remove('hide');$('pr').style.width='100%';
+$('score').textContent='ពិន្ទុ៖ '+sc+' / '+Q.length}else show()};
+$('again').onclick=function(){i=0;sc=0;$('end').classList.add('hide');$('qa').classList.remove('hide');show()};
+show();
+</script>
+<script>if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}</script></body>
+</html>
